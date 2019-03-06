@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script src="../js/mock-min.js"></script>
+<script src="../js/axios.min.js"></script>
+<script>
+Mock.mock(/\/goods\/\d+/,'get',{
+    'skuid':'@id',
+    'spuid':'@id',
+    'goods_name':'@ctitle(30,40)',
+    'price':'@float(10,200000,0,2)',
+    'on_sale_date':'@datetime',
+    'comment_count':'@integer(10,20000)',
+    'comment_level':'@integer(1,5)',
+    'cat1_info':{
+        'id':'@id',
+        'cat_name':"@ctitle"
+    },
+    'cat2_info':{
+        'id':'@id',
+        'cat_name':"@ctitle"
+    },
+    'cat3_info':{
+        'id':'@id',
+        'cat_name':"@ctitle"
+    },
+    'logo':{
+        'smlogo':'@dataImage(50x50)',
+        'biglogo':'@dataImage(350x350)',
+        'xbiglogo':'@dataImage(800x800)',
+    },
+    'photos|3-10':[
+        {
+            'smimg':'@dataImage(50x50)',
+            'bigimg':'@dataImage(350x350)',
+            'xbigimg':'@dataImage(800x800)',
+        }
+    ],
+    'description':'@ctitle(100,3000)',
+    'aftersale':'@ctitle(100,3000)',
+    'stock':"@integer(10,3000)",
+    'spec_list':[
+        {
+            'id':1,
+            "spec_name":"颜色",
+            "options":[
+                {
+                    "id":1,
+                    "option_name":"白色"
+                },
+                {
+                    "id":2,
+                    "option_name":"黑色"
+                }
+            ]
+        },
+        {
+            'id':2,
+            "spec_name":"内存",
+            "options":[
+                {
+                    "id":6,
+                    "option_name":"4G"
+                },
+                {
+                    "id":7,
+                    "option_name":"8G"
+                },
+                {
+                    "id":8,
+                    "option_name":"16G"
+                }
+            ]
+        }
+    ],
+    'spec_info':{
+        'id_list':'1:2|2:6',
+        'id_txt':"颜色:黑色|内存:4G"
+    },
+    'sku_list':[
+        {
+            'skuid':'@id',
+            'id_list':'1:2|2:6'
+        },
+        {
+            'skuid':'@id',
+            'id_list':'1:2|2:7'
+        },
+        {
+            'skuid':'@id',
+            'id_list':'1:2|2:8'
+        },
+        {
+            'skuid':'@id',
+            'id_list':'1:1|2:6'
+        },
+        {
+            'skuid':'@id',
+            'id_list':'1:1|2:7'
+        },
+        {
+            'skuid':'@id',
+            'id_list':'1:1|2:8'
+        },
+    ]
+})
+// 获取商品详情
+function getGoodsInfo(skuid){
+    return axios.get('/goods/'+skuid)
+}
+getGoodsInfo(23).then((res)=>{
+    console.log( res.data )
+})
+</script>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script src="../js/mock-min.js"></script>
+<script src="../js/axios.min.js"></script>
+<script>
+Mock.mock(/\/comments\/\d+/, 'get', {
+    'impressions|6-10':[
+        {
+            'title':'@ctitle(2,5)',
+            'count':'@integer(5,2000)'
+        }
+    ],
+    'ratio':{
+        'goods':"85",
+        'common':"10",
+        'bad':"5"
+    },
+    'comment_count':"@integer(10,300)",
+    'comments|10':[
+        {
+            'id':"@id",
+            'star':"@integer(1,5)",
+            'created_at':"@datetime",
+            "content":"@ctitle(10,300)",
+            'user':{
+                'id':"@id",
+                'face':'@dataImage(66x66)',
+                'name':"@cname"
+            }
+        }
+    ]
+})
+
+function getComments(spuid,per_page,page){
+    return axios.get('/comments/'+spuid+"?limit="+per_page+"&page="+page+"&sort_by=id&sort_way=desc")
+}
+
+
+getComments(5768, 10, 1).then((res)=>{
+    console.log( res.data )
+})
+</script>
